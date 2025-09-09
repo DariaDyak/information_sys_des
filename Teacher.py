@@ -1,13 +1,48 @@
-class Teacher:
-    def __init__(self, teacher_id: int, first_name: str, last_name: str, email: str, academic_degree: str, administrative_position: str, experience_years: int):
+import json
 
-        self.set_teacher_id(teacher_id)
-        self.set_first_name(first_name)
-        self.set_last_name(last_name)
-        self.set_email(email)
-        self.set_academic_degree(academic_degree)
-        self.set_administrative_position(administrative_position)
-        self.set_experience_years(experience_years)
+class Teacher:
+    def __init__(self, *args, **kwargs):
+        if args:
+            if isinstance(args[0], str):
+                self.initialize_from_string(args[0])
+            elif isinstance(args[0], int):
+                self.set_teacher_id(args[0])
+                self.set_first_name(args[1])
+                self.set_last_name(args[2])
+                self.set_email(args[3])
+                self.set_academic_degree(args[4])
+                self.set_administrative_position(args[5])
+                self.set_experience_years(args[6])
+            else:
+                raise ValueError("Invalid")
+        elif kwargs:
+            self.initialize_from_JSON(kwargs)
+        else:
+            raise ValueError("Invalid")
+
+    def initialize_from_string(self, data_str: str):
+        data = data_str.split(',')
+        if len(data) != 7:
+            raise ValueError(
+                "There are 7 values: teacher_id, first_name, last_name, email, academic_degree, administrative_position, experience_years")
+
+        teacher_id, first_name, last_name, email, academic_degree, administrative_position, experience_years = data
+        self.set_teacher_id(int(teacher_id))
+        self.set_first_name(first_name.strip())
+        self.set_last_name(last_name.strip())
+        self.set_email(email.strip())
+        self.set_academic_degree(academic_degree.strip())
+        self.set_administrative_position(administrative_position.strip())
+        self.set_experience_years(int(experience_years))
+
+    def initialize_from_JSON(self, json_data: dict):
+        self.set_teacher_id(json_data.get('teacher_id'))
+        self.set_first_name(json_data.get('first_name'))
+        self.set_last_name(json_data.get('last_name'))
+        self.set_email(json_data.get('email'))
+        self.set_academic_degree(json_data.get('academic_degree'))
+        self.set_administrative_position(json_data.get('administrative_position'))
+        self.set_experience_years(json_data.get('experience_years'))
 
     @staticmethod
     def validate_teacher_id(teacher_id: int) -> bool:
@@ -33,7 +68,6 @@ class Teacher:
             raise ValueError("experience years is invalid")
         return True
 
-    # getters (чтение значений)
     def get_teacher_id(self):
         return self.__teacher_id
 
@@ -55,7 +89,6 @@ class Teacher:
     def get__experience_years(self):
         return self.__experience_years
 
-    # setters (изменение значений) с валидацией
     def set_teacher_id(self, teacher_id: int):
         self.validate_teacher_id(teacher_id)
         self.__teacher_id = teacher_id
