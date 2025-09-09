@@ -118,6 +118,25 @@ class Teacher:
         self.__experience_years = experience_years
 
     def __str__(self):
-        return (f"Teacher_ID: {self.__teacher_id}"
-                f"Fullname: {self.__first_name} {self.__last_name}, Email: {self.__email}, Degree: {self.__academic_degree}, Position: {self.__administrative_position}"
+        return (f"Teacher_ID: {self.__teacher_id}, "
+                f"Fullname: {self.__first_name} {self.__last_name}, Email: {self.__email}, Degree: {self.__academic_degree}, Position: {self.__administrative_position}, "
                 f"Experience: {self.__experience_years} years")
+
+    def __full__(self):
+        return (f"Teacher(teacher_id={self.__teacher_id}, First_name='{self.__first_name}', Last_name='{self.__last_name}', Email='{self.__email}', "
+                f"Degree='{self.__academic_degree}', Position= '{self.__administrative_position}', "
+                f"Experience_years={self.__experience_years}")
+
+    def __short__(self):
+        return f"{self.__first_name} {self.__last_name} ({self.__teacher_id})"
+
+    def __comparison__(self, other):
+        if not isinstance(other, Teacher):
+            return False
+        return (self.__teacher_id == other.__teacher_id and
+            self.__first_name == other.__first_name and
+            self.__last_name == other.__last_name and
+            self.__email == other.__email and
+            self.__academic_degree == other.__academic_degree and
+            self.__administrative_position == other.__administrative_position and
+            self.__experience_years == other.__experience_years)
