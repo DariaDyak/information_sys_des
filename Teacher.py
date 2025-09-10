@@ -140,3 +140,21 @@ class Teacher:
             self.__academic_degree == other.__academic_degree and
             self.__administrative_position == other.__administrative_position and
             self.__experience_years == other.__experience_years)
+
+class Teacher_short_info(Teacher):
+    def __init__(self, teacher: Teacher, inn: str, ogrn: str):
+        super().__init__(
+            teacher.get_teacher_id(),
+            teacher.get__first_name(),
+            teacher.get__last_name(),
+            teacher.get__email(),
+            teacher.get__academic_degree(),
+            teacher.get__administrative_position(),
+            teacher.get__experience_years()
+        )
+        self.inn = inn
+        self.ogrn = ogrn
+
+    def __str__(self):
+        return (f"Teacher short info: {self.get__last_name()} {self.get__first_name()[0]}. "
+                f"INN: {self.inn}, OGRN: {self.ogrn}")
